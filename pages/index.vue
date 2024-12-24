@@ -1,5 +1,6 @@
 <script setup>
 const { login } = useDirectusAuth();
+const user = useDirectusUser();
 
 async function onSubmit() {
     try {
@@ -7,6 +8,8 @@ async function onSubmit() {
         console.log("Залогинились")
     } catch (e) { }
 };
+
+const email = user.value.email;
 </script>
 
 <template>
@@ -14,6 +17,7 @@ async function onSubmit() {
         <q-card dark bordered class="bg-grey-9 my-card">
             <q-card-section>
                 <div class="text-h6">Our Changing Planet</div>
+                <div>{{ email }}</div>
             </q-card-section>
 
             <q-card-section class="q-pt-none">
