@@ -1,44 +1,55 @@
 <script setup>
-const { login } = useDirectusAuth();
-const user = useDirectusUser();
+const columns = [
+    { name: 'name', label: 'Логин', align: 'left', field: 'name', sortable: true },
+    { name: 'action', align: 'center', label: 'Последняя активность', field: 'action', sortable: true },
+    { name: 'progress', label: '% выполнения', field: 'progress', sortable: true },
+    { name: 'step', label: 'Этап', field: 'step' },
+]
 
-async function onSubmit() {
-    try {
-        await login({ email: "admin@example.com", password: "d1r3ctu5" });
-        console.log("Залогинились")
-    } catch (e) { }
-};
+const rows = [
+    {
+        name: 'ivanov',
+        action: '',
+        progress: '14%',
+        step: 24,
+    },
+    {
+        name: 'petrov',
+        action: '',
+        progress: '100%',
+        step: 37
+    }
+]
 </script>
 
 <template>
-    <q-layout view="hHh lpR fFf">
-
-        <q-header elevated class="bg-primary text-white" height-hint="98">
-            <q-toolbar>
-                <q-toolbar-title>
-                    <q-avatar>
-                        <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
-                    </q-avatar>
-
-                </q-toolbar-title>
-            </q-toolbar>
-
-            <q-tabs align="left">
-                <q-route-tab to="/page1" label="Page One" />
-                <q-route-tab to="/page2" label="Page Two" />
-                <q-route-tab to="/page3" label="Page Three" />
-            </q-tabs>
-        </q-header>
-
-        <q-page-container>
-            <router-view />
-        </q-page-container>
-
-    </q-layout>
+    <div class="main">
+        <div class="row q-mt-md">
+            <div class="col-3 col-lg-2">
+                <q-card class="card q-mx-sm">
+                    <q-card-section>
+                        <q-btn class="full-width" flat icon="insights" label="Обзор дегустаций" />
+                    </q-card-section>
+                </q-card>
+            </div>
+            <div class="col">
+                <q-card class="card q-mx-sm">
+                    <q-card-section>
+                        <div class="row items-center">
+                            <q-icon name="recent_actors" size="3em" />
+                            <div class="q-ml-sm text-h6" text-body2>Текущие сессии</div>
+                        </div>
+                        <q-table class="q-mt-sm" flat :rows="rows" :columns="columns" row-key="name" />
+                    </q-card-section>
+                </q-card>
+            </div>
+        </div>
+    </div>
 </template>
 
 <style lang="sass" scoped>
-.my-card
-  width: 100%
-  max-width: 250px
+.main
+    height: 600px
+.card
+    height: 85vh
 </style>

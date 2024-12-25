@@ -9,5 +9,8 @@ export default defineNuxtConfig({
         url: "http://localhost:8055"
       }
     }
+  },
+  quasar: {
+    lang: "ru",
   }
 })
