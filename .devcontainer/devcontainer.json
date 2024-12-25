@@ -20,7 +20,8 @@
 				"christian-kohler.npm-intellisense",
 				"christian-kohler.path-intellisense",
 				"esbenp.prettier-vscode",
-				"Vue.volar"
+				"Vue.volar",
+				"syler.sass-indented"
 			]
 		}
 	},
