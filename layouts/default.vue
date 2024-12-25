@@ -5,6 +5,7 @@
                 <q-toolbar-title>
                     <img class="logo" src="/public/img/JDE.webp">
                 </q-toolbar-title>
+                <AppHeaderAbout />
             </q-toolbar>
 
             <q-tabs align="left" inline-label>
