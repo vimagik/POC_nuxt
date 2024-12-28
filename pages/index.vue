@@ -1,4 +1,6 @@
 <script setup>
+import { onMounted } from 'vue'
+
 const columns = [
     { name: 'name', label: 'Логин', align: 'left', field: 'name', sortable: true },
     { name: 'action', align: 'center', label: 'Последняя активность', field: 'action', sortable: true },
@@ -6,20 +8,18 @@ const columns = [
     { name: 'step', label: 'Этап', field: 'step' },
 ]
 
-const rows = [
-    {
-        name: 'ivanov',
-        action: '',
-        progress: '14%',
-        step: 24,
-    },
-    {
-        name: 'petrov',
-        action: '',
-        progress: '100%',
-        step: 37
-    }
-]
+const rows = ref([])
+const { getItems } = useDirectusItems();
+
+async function getUsers() {
+    rows.value = await getItems({ collection: "users_profile" })
+}
+
+const addUser = ref(false)
+
+onMounted(async () => {
+    await getUsers()
+})
 </script>
 
 <template>
@@ -40,10 +40,12 @@ const rows = [
                             <div class="q-ml-sm text-h6" text-body2>Текущие сессии</div>
                         </div>
                         <q-table class="q-mt-sm" flat :rows="rows" :columns="columns" row-key="name" />
+                        <q-btn color="primary" label="Добавить пользователя" @click="addUser = true" />
                     </q-card-section>
                 </q-card>
             </div>
         </div>
+        <AppAddUserPopup v-model="addUser" />
     </div>
 </template>
 
