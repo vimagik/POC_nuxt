@@ -27,9 +27,9 @@ async function onSubmit() {
 <template>
     <div class="main row justify-center items-center">
         <q-card class="my-card">
-            <q-img src="https://cdn.quasar.dev/img/mountains.jpg">
+            <q-img src="img/cup.webp">
                 <div class="absolute-bottom row justify-center">
-                    <img src="/public/img/JDE.webp">
+                    <q-img src="img/JDE.png" height="90px" />
                 </div>
             </q-img>
 
