@@ -23,7 +23,7 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div class="main">
+    <div>
         <div class="row q-mt-md">
             <div class="col-3 col-lg-2">
                 <q-card class="card q-mx-sm">
@@ -50,8 +50,6 @@ onMounted(async () => {
 </template>
 
 <style lang="sass" scoped>
-.main
-    height: 600px
 .card
-    height: 85vh
+    height: 77vh
 </style>
