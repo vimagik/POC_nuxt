@@ -7,6 +7,31 @@ const addUserData = ref({
     progress: 0,
     step: ''
 })
+
+const { createItems } = useDirectusItems();
+const emit = defineEmits(['updateTable',])
+
+const createUserStatus = ref(false)
+
+async function onSubmit() {
+    createUserStatus.value = true
+    const items = []
+    items.push(addUserData.value)
+    try {
+        await createItems({ collection: "users_profile", items });
+        addUserData.value = {
+            name: '',
+            action: '',
+            progress: 0,
+            step: ''
+        }
+        addUser.value = false
+        emit('updateTable')
+    } catch (error) {
+
+    }
+    createUserStatus.value = false
+}
 </script>
 
 <template>
@@ -15,9 +40,9 @@ const addUserData = ref({
             <q-card-section>
                 <div class="text-h6">Новый пользователь</div>
             </q-card-section>
+            <q-form @submit="onSubmit">
+                <q-card-section class="q-pt-none">
 
-            <q-card-section class="q-pt-none">
-                <q-form>
                     <q-input autofocus v-model="addUserData.name" @keyup.enter="addUser = false" label="Имя"
                         :rules="[val => val && val.length > 0 || 'Обязательное поле']" lazy-rules />
                     <q-input v-model="addUserData.action" @keyup.enter="addUser = false" label="Последняя активность"
@@ -29,14 +54,15 @@ const addUserData = ref({
                         ]" lazy-rules />
                     <q-input v-model="addUserData.step" @keyup.enter="addUser = false" label="Этап"
                         :rules="[val => val && val.length > 0 || 'Обязательное поле']" lazy-rules />
-                </q-form>
 
-            </q-card-section>
 
-            <q-card-actions align="right" class="text-primary">
-                <q-btn flat label="Отмена" v-close-popup />
-                <q-btn flat label="Создать пользователя" v-close-popup />
-            </q-card-actions>
+                </q-card-section>
+
+                <q-card-actions align="right" class="text-primary">
+                    <q-btn flat label="Отмена" v-close-popup />
+                    <q-btn flat type="submit" label="Создать пользователя" :loading="createUserStatus" />
+                </q-card-actions>
+            </q-form>
         </q-card>
     </q-dialog>
 </template>

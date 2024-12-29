@@ -45,7 +45,7 @@ onMounted(async () => {
                 </q-card>
             </div>
         </div>
-        <AppAddUserPopup v-model="addUser" />
+        <AppAddUserPopup v-model="addUser" @updateTable="getUsers" />
     </div>
 </template>
 
