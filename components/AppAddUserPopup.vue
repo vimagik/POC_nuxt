@@ -8,17 +8,14 @@ const addUserData = ref({
     step: ''
 })
 
-const { createItems } = useDirectusItems();
 const emit = defineEmits(['updateTable',])
 
 const createUserStatus = ref(false)
 
 async function onSubmit() {
     createUserStatus.value = true
-    const items = []
-    items.push(addUserData.value)
-    try {
-        await createItems({ collection: "users_profile", items });
+    const { error } = await useAddItems("users_profile", addUserData.value)
+    if (!error.value) {
         addUserData.value = {
             name: '',
             action: '',
@@ -27,10 +24,15 @@ async function onSubmit() {
         }
         addUser.value = false
         emit('updateTable')
-    } catch (error) {
-
     }
     createUserStatus.value = false
+}
+
+const rules = {
+    required: val => val && val.length > 0 || 'Обязательное поле',
+    ltn100: val => val <= 100 || 'Значение не может быть больше 100',
+    gtn0: val => val >= 0 || 'Значение должо быть положительным',
+    requiredNumber: val => val || 'Обязательное поле',
 }
 </script>
 
@@ -42,20 +44,14 @@ async function onSubmit() {
             </q-card-section>
             <q-form @submit="onSubmit">
                 <q-card-section class="q-pt-none">
-
                     <q-input autofocus v-model="addUserData.name" @keyup.enter="addUser = false" label="Имя"
-                        :rules="[val => val && val.length > 0 || 'Обязательное поле']" lazy-rules />
+                        :rules="[rules.required]" lazy-rules />
                     <q-input v-model="addUserData.action" @keyup.enter="addUser = false" label="Последняя активность"
-                        :rules="[val => val && val.length > 0 || 'Обязательное поле']" lazy-rules />
+                        :rules="[rules.required]" lazy-rules />
                     <q-input v-model="addUserData.progress" type="number" @keyup.enter="addUser = false"
-                        label="Прогресс" :rules="[
-                            val => val && val >= 0 || 'Обязательное поле',
-                            val => val <= 100 || 'Значение не может быть больше 100'
-                        ]" lazy-rules />
+                        label="Прогресс" :rules="[rules.gtn0, rules.ltn100, rules.requiredNumber]" lazy-rules />
                     <q-input v-model="addUserData.step" @keyup.enter="addUser = false" label="Этап"
-                        :rules="[val => val && val.length > 0 || 'Обязательное поле']" lazy-rules />
-
-
+                        :rules="[rules.required]" lazy-rules />
                 </q-card-section>
 
                 <q-card-actions align="right" class="text-primary">

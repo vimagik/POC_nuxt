@@ -4,10 +4,7 @@ import AppAboutProjectPopup from '~/components/AppAboutProjectPopup.vue';
 const { getItems } = useDirectusItems();
 const projects = ref([])
 
-function formatDate(dateStr) {
-    const date = new Date(dateStr)
-    return new Intl.DateTimeFormat("ru-RU").format(date)
-}
+const formatDate = useFormatData
 
 const openAboutPopup = ref(false)
 const projectId = ref(null)

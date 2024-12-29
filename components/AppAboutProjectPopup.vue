@@ -3,6 +3,7 @@ const projectModel = defineModel()
 const props = defineProps(['projId'])
 
 const { getItemById } = useDirectusItems();
+const { getUserById } = useDirectusUsers();
 const projectData = ref({})
 const projectUser = ref({})
 
@@ -11,6 +12,9 @@ async function fetchProjectData() {
         collection: 'project',
         id: props.projId
     })
+    projectUser.value = await getUserById({
+        id: projectData.value.author
+    })
 }
 
 watch(projectModel, async () => {
@@ -18,6 +22,7 @@ watch(projectModel, async () => {
         await fetchProjectData()
     } else {
         projectData.value = {}
+        projectUser.value = {}
     }
 })
 </script>
