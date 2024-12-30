@@ -31,7 +31,7 @@ onMounted(() => {
                 <q-card class="card q-mx-sm">
                     <q-card-section>
                         <div class="row justify-center">
-                            <q-card v-for="project in projects" class="cardProject q-mx-sm">
+                            <q-card v-for="project in projects" class="cardProject q-mx-sm q-mb-sm">
                                 <q-card-section>
                                     <div class="text-h6">{{ project.title }}</div>
                                     <div class="text-subtitle2">Порядковый номер: {{ project.number }}</div>
