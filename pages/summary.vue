@@ -1,10 +1,6 @@
 <script setup>
 import AppAboutProjectPopup from '~/components/AppAboutProjectPopup.vue';
-
-const { getItems } = useDirectusItems();
-const projects = ref([])
-
-const formatDate = useFormatData
+const { formatData } = useFormatData()
 
 const openAboutPopup = ref(false)
 const projectId = ref(null)
@@ -14,12 +10,10 @@ function openAboutProj(projId) {
     openAboutPopup.value = true
 }
 
-async function fetchProjects() {
-    projects.value = await getItems({ collection: "project" })
-}
+const { data: projects, refresh: refreshProj } = await useGetItems('project', { immediate: false })
 
-onMounted(async () => {
-    await fetchProjects()
+onMounted(() => {
+    refreshProj()
 })
 </script>
 
@@ -44,10 +38,10 @@ onMounted(async () => {
                                 </q-card-section>
                                 <q-card-section>
                                     <q-chip class="myChip" text-color="white" icon="event">
-                                        {{ formatDate(project.start_date) }}
+                                        {{ formatData(project.start_date) }}
                                     </q-chip>
                                     <q-chip class="myChip" color="#a04830" text-color="white" icon="event">
-                                        {{ formatDate(project.end_date) }}
+                                        {{ formatData(project.end_date) }}
                                     </q-chip>
                                 </q-card-section>
                                 <q-card-section>

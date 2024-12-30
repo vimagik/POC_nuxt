@@ -14,7 +14,7 @@ const createUserStatus = ref(false)
 
 async function onSubmit() {
     createUserStatus.value = true
-    const { error } = await useAddItems("users_profile", addUserData.value)
+    const { error } = await useAddItems("users_profile", addUserData)
     if (!error.value) {
         addUserData.value = {
             name: '',
@@ -31,8 +31,7 @@ async function onSubmit() {
 const rules = {
     required: val => val && val.length > 0 || 'Обязательное поле',
     ltn100: val => val <= 100 || 'Значение не может быть больше 100',
-    gtn0: val => val >= 0 || 'Значение должо быть положительным',
-    requiredNumber: val => val || 'Обязательное поле',
+    gtn0: val => val && val >= 0 || 'Значение должо быть положительным',
 }
 </script>
 
@@ -49,7 +48,7 @@ const rules = {
                     <q-input v-model="addUserData.action" @keyup.enter="addUser = false" label="Последняя активность"
                         :rules="[rules.required]" lazy-rules />
                     <q-input v-model="addUserData.progress" type="number" @keyup.enter="addUser = false"
-                        label="Прогресс" :rules="[rules.gtn0, rules.ltn100, rules.requiredNumber]" lazy-rules />
+                        label="Прогресс" :rules="[rules.gtn0, rules.ltn100]" lazy-rules />
                     <q-input v-model="addUserData.step" @keyup.enter="addUser = false" label="Этап"
                         :rules="[rules.required]" lazy-rules />
                 </q-card-section>

@@ -2,10 +2,10 @@ export const useAddItems = (colName, data, options = {}) => {
     const { createItems } = useDirectusItems();
     const items = [];
 
-    if (data instanceof Array) {
-        items = data;
+    if (data.value instanceof Array) {
+        items = data.value;
     } else {
-        items.push(data);
+        items.push(data.value);
     }
 
     return useAsyncData(

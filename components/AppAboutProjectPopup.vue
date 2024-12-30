@@ -1,28 +1,31 @@
 <script setup>
 const projectModel = defineModel()
 const props = defineProps(['projId'])
+const proj = ref(null)
 
-const { getItemById } = useDirectusItems();
-const { getUserById } = useDirectusUsers();
-const projectData = ref({})
-const projectUser = ref({})
+const { data: projectData, refresh: refreshProject, error, clear: clearProj } = await useGetItemById(
+    'project',
+    proj,
+    {
+        immediate: false,
+    }
+)
 
-async function fetchProjectData() {
-    projectData.value = await getItemById({
-        collection: 'project',
-        id: props.projId
-    })
-    projectUser.value = await getUserById({
-        id: projectData.value.author
-    })
-}
+const userId = ref(null)
 
-watch(projectModel, async () => {
+const { data: projectUser, refresh: refreshUser, clear: clearUser } = await useGetUsersById(
+    userId,
+    {
+        immediate: false
+    }
+)
+
+watch(projectModel, () => {
     if (projectModel.value) {
-        await fetchProjectData()
-    } else {
-        projectData.value = {}
-        projectUser.value = {}
+        proj.value = props.projId
+        console.log(proj.value)
+        refreshProject()
+        console.log(projectData)
     }
 })
 </script>
@@ -31,10 +34,10 @@ watch(projectModel, async () => {
     <q-dialog v-model="projectModel">
         <q-card>
             <q-card-section>
-                <p class="text-h6">О проекте</p>
+                <p class="text-h6">О проекте</p> {{ props.projId }}
             </q-card-section>
-            <q-card-section>
-                {{ projectData }} {{ projectUser }}
+            <q-card-section v-if="projectData">
+                {{ projectData }}
             </q-card-section>
         </q-card>
     </q-dialog>
