@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
-  modules: ['nuxt-quasar-ui', 'nuxt-directus'],
+  modules: ['nuxt-quasar-ui', 'nuxt-directus', '@nuxt/test-utils/module'],
   runtimeConfig: {
     public: {
       directus: {

@@ -7,7 +7,8 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "test": "vitest run"
   },
   "dependencies": {
     "@quasar/extras": "^1.16.15",
@@ -19,6 +20,14 @@
     "vue-router": "latest"
   },
   "devDependencies": {
-    "sass-embedded": "^1.83.0"
+    "@nuxt/test-utils": "^3.15.1",
+    "@quasar/quasar-app-extension-testing-unit-vitest": "^1.1.0",
+    "@testing-library/vue": "^8.1.0",
+    "@vue/test-utils": "^2.4.6",
+    "happy-dom": "^15.11.7",
+    "playwright-core": "^1.49.1",
+    "sass-embedded": "^1.83.0",
+    "vitest": "^2.1.8",
+    "vue-router-mock": "^1.1.0"
   }
 }

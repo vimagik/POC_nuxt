@@ -8,11 +8,11 @@
         </q-toolbar>
 
         <q-tabs align="left" inline-label>
-            <q-route-tab to="/" icon="home" />
+            <q-route-tab data-testid="home" to="/" icon="home" />
             <q-icon name="arrow_forward_ios"></q-icon>
-            <q-route-tab to="/summary" label="Результаты" icon="assignment_turned_in" />
+            <q-route-tab data-testid="results" to="/summary" label="Результаты" icon="assignment_turned_in" />
             <q-icon name="arrow_forward_ios"></q-icon>
-            <q-route-tab to="/design" label="Редактирование" icon="design_services" />
+            <q-route-tab data-testid="design" label="Редактирование" icon="design_services" />
         </q-tabs>
     </q-header>
 </template>
